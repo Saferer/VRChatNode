@@ -15,6 +15,12 @@ class User extends LimitedUser {
 class CurrentUser extends User {
   constructor(client, obj) {
     super(client, obj);
-    oboj && Object.assign(this, obj);
+    obj && Object.assign(this, obj);
   }
 }
+
+module.exports = {
+  LimitedUser: LimitedUser,
+  User: User,
+  CurrentUser: CurrentUser,
+};

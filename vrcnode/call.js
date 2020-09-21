@@ -2,6 +2,7 @@ const got = require("got");
 const { CookieJar } = require("tough-cookie");
 const vrcnodeError = require("./error.js");
 
+//TODO: Check most common errors and throw them.
 checkError = (res) => {
   throw new Error(res.error.status_code + ":" + res.error.message);
 };
@@ -28,8 +29,8 @@ class Call {
 
   call = async (path, method = "GET", options = {}, auth = true) => {
     options = options || {};
-    const headers = options.headers || {};
     let searchParams = options.searchParams || {};
+    const headers = options.headers || {};
     const json = options.json || method === "GET" ? undefined : {};
     if (auth && !this.authSet) {
       throw new vrcnodeError.AuthNotSet(
@@ -46,19 +47,19 @@ class Call {
       }
     }
     searchParams.apiKey = this.apiKey;
+    let res;
     try {
-      let res = await this.api(path, {
+      res = await this.api(path, {
         headers,
         searchParams,
         method,
         json,
       });
-      res = { status: res.statusCode, body: res.body };
-      return res;
     } catch (error) {
-      console.log(error);
       checkError(error.response.body);
     }
+    res = { status: res.statusCode, body: res.body };
+    return res;
   };
 }
 
