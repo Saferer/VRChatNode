@@ -1,0 +1,24 @@
+{
+  "name": "vrchatnode",
+  "version": "1.0.0",
+  "description": "Node wrapper for the official VRChat API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saferer/VRChatNode.git"
+  },
+  "author": "Saferer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Saferer/VRChatNode/issues"
+  },
+  "homepage": "https://github.com/Saferer/VRChatNode#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "got": "^11.7.0",
+    "tough-cookie": "^4.0.0"
+  }
+}
