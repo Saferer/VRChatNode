@@ -19,8 +19,15 @@ class CurrentUser extends User {
   }
 }
 
+class Avatar {
+  constructor(client, obj) {
+    obj && Object.assign(this, obj);
+  }
+}
+
 module.exports = {
   LimitedUser: LimitedUser,
   User: User,
   CurrentUser: CurrentUser,
+  Avatar: Avatar,
 };

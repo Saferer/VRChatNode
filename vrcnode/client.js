@@ -1,7 +1,7 @@
 const got = require("got");
 const { CookieJar } = require("tough-cookie");
 const { Call } = require("./call");
-const { LimitedUser, User, CurrentUser } = require("./objects");
+const { LimitedUser, User, CurrentUser, Avatar } = require("./objects");
 
 module.exports = class Client {
   constructor() {
@@ -64,5 +64,10 @@ module.exports = class Client {
       offset += 100;
     }
     return friends;
+  };
+
+  fetchAvatar = async (id) => {
+    let res = await this.api.call(`avatars/${id}`, "GET");
+    return new Avatar(this, res.body);
   };
 };
