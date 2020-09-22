@@ -48,6 +48,13 @@ class World extends LimitedWorld {
   }
 }
 
+class Notification {
+  constructor(client, obj) {
+    this.client = client;
+    obj && Object.assign(this, obj);
+  }
+}
+
 module.exports = {
   LimitedUser: LimitedUser,
   User: User,
@@ -55,4 +62,5 @@ module.exports = {
   Avatar: Avatar,
   World: World,
   LimitedWorld: LimitedWorld,
+  Notification: Notification,
 };
