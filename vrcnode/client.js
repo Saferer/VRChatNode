@@ -1,7 +1,8 @@
 const got = require("got");
 const { CookieJar } = require("tough-cookie");
 const { Call } = require("./call");
-const { LimitedUser, User, CurrentUser, Avatar } = require("./objects");
+const { LimitedUser, User, CurrentUser, Avatar, World } = require("./objects");
+const vrcnodeError = require("./error.js");
 
 module.exports = class Client {
   constructor() {
@@ -20,7 +21,8 @@ module.exports = class Client {
     this.api.setAuth(base);
     const res = await this.api.call("auth/user", "GET", options);
     this.loggedIn = true;
-    this.me = new CurrentUser(this, res);
+
+    this.me = new CurrentUser(this, res.body);
     return this.me;
   };
 
@@ -34,7 +36,8 @@ module.exports = class Client {
 
   fetchMe = async () => {
     const res = await this.api.call("auth/user", "GET");
-    console.log(res);
+    this.me = new CurrentUser(this, res.body);
+    return this.me;
   };
 
   fetchFriends = async (n = 0, offset = 0, offline = false) => {
@@ -46,7 +49,7 @@ module.exports = class Client {
       }
 
       let index = 0;
-      let res = await this.api.call("auth/user/friends", "GET", {
+      const res = await this.api.call("auth/user/friends", "GET", {
         searchParams: {
           offset,
           n,
@@ -67,7 +70,13 @@ module.exports = class Client {
   };
 
   fetchAvatar = async (id) => {
-    let res = await this.api.call(`avatars/${id}`, "GET");
+    const res = await this.api.call(`avatars/${id}`, "GET");
     return new Avatar(this, res.body);
+  };
+
+  fetchWorld = async (id) => {
+    const res = await this.api.call(`worlds/${id}`, "GET");
+    console.log(res);
+    return new World(this, res.body);
   };
 };

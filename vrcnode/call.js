@@ -31,10 +31,10 @@ class Call {
     options = options || {};
     let searchParams = options.searchParams || {};
     const headers = options.headers || {};
-    const json = options.json || method === "GET" ? undefined : {};
+    const json = options.json || (method === "GET" ? undefined : {});
     if (auth && !this.authSet) {
       throw new vrcnodeError.AuthNotSet(
-        "Calls requiring authentication requires set_auth to be called"
+        "Calls requiring authentication requires client to be logged in to be called"
       );
     }
     if (!this.apiKey) {
