@@ -3,6 +3,30 @@ class LimitedUser {
     this.client = client;
     obj && Object.assign(this, obj);
   }
+
+  friend = async () => {
+    const res = await this.client.api.call(
+      `user/${this.id}/friendRequest`,
+      "POST"
+    );
+    return new Notification(this.client, res.body);
+  };
+
+  removeFriend = async () => {
+    const res = await this.client.api.call(
+      `auth/user/friends/${this.id}`,
+      "DELETE"
+    );
+    return res.body;
+  };
+
+  friendStatus = async () => {
+    const res = await this.client.api.call(
+      `user/${this.id}/friendStatus`,
+      "GET"
+    );
+    return res.body;
+  };
 }
 
 class User extends LimitedUser {

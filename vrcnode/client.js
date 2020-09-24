@@ -78,21 +78,9 @@ module.exports = class Client {
     const res = await this.api.call(`worlds/${id}`, "GET");
     return new World(this, res.body);
   };
-  // **TODO** MOVE TO RESPECTIVE CLASSES
-  // fetchFriendStatus = async (id) => {
-  //   const res = await this.api.call(`user/${id}/friendStatus`, "GET");
-  //   return res.body;
-  // };
 
-  // Send a friend request by ID
-  // addFriend = async (id) => {
-  //   const res = await this.api.call(`user/${id}/friendRequest`, "POST");
-  //   return new Notification(this.client, res.body);
-  // };
-
-  // Remove a friend by ID
-  // removeFriend = async (id) => {
-  //   const res = await this.api.call(`auth/user/friends/${id}`, "DELETE");
-  //   return res.body;
-  // };
+  fetchUserByName = async (username) => {
+    const res = await this.api.call(`users/${username}/name`, "GET");
+    return new User(this, res.body);
+  };
 };
