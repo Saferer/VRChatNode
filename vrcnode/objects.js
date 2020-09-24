@@ -77,6 +77,14 @@ class Notification {
     this.client = client;
     obj && Object.assign(this, obj);
   }
+
+  accept = async () => {
+    const res = await this.client.api.call(
+      `auth/user/notifications/${this.id}/accept`,
+      "PUT"
+    );
+    return res.body;
+  };
 }
 
 module.exports = {

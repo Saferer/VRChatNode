@@ -1,7 +1,14 @@
 const got = require("got");
 const { CookieJar } = require("tough-cookie");
 const { Call } = require("./call");
-const { LimitedUser, User, CurrentUser, Avatar, World } = require("./objects");
+const {
+  LimitedUser,
+  User,
+  CurrentUser,
+  Avatar,
+  World,
+  Notification,
+} = require("./objects");
 const vrcnodeError = require("./error.js");
 
 module.exports = class Client {
@@ -82,5 +89,19 @@ module.exports = class Client {
   fetchUserByName = async (username) => {
     const res = await this.api.call(`users/${username}/name`, "GET");
     return new User(this, res.body);
+  };
+
+  fetchUserByID = async (id) => {
+    const res = await this.api.call(`users/${id}`);
+    return new User(this, res.body);
+  };
+
+  fetchNotifications = async () => {
+    const res = await this.api.call(`auth/user/notifications`, "GET");
+    let notifications = [];
+    res.body.forEach((notification) => {
+      notifications.push(new Notification(this, notification));
+    });
+    return notifications;
   };
 };
