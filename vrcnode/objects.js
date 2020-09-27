@@ -79,12 +79,23 @@ class Notification {
   }
 
   accept = async () => {
-    const res = await this.client.api.call(
-      `auth/user/notifications/${this.id}/accept`,
-      "PUT"
-    );
-    return res.body;
+    if (this.type === "friendrequest") {
+      const res = await this.client.api.call(
+        `auth/user/notifications/${this.id}/accept`,
+        "PUT"
+      );
+      return res.body;
+    }
+    //TODO - THROW ERROR IF UNABLE TO ACCEPT THIS TYPE OF NOTIFICATION
+    return null;
   };
+}
+
+class Favorite {
+  constructor(client, obj) {
+    this.client = client;
+    obj & Object.assign(this, obj);
+  }
 }
 
 module.exports = {

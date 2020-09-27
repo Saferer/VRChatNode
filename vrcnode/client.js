@@ -86,6 +86,30 @@ module.exports = class Client {
     return new World(this, res.body);
   };
 
+  fetchAnyWorld = async (searchParams) => {
+    const res = await this.api.call(`worlds`, "GET", { searchParams });
+    let worlds = [];
+    res.body.forEach((world) => {
+      worlds.push(new World(this, world));
+    });
+    return worlds;
+  };
+
+  searchUsers = async (username, active = true, n = 100, offset = 0) => {
+    const res = await this.api.call(`users`, "GET", {
+      searchParams: {
+        search: username,
+        n,
+        offset,
+      },
+    });
+    let users = [];
+    res.body.forEach((user) => {
+      users.push(new LimitedUser(this, user));
+    });
+    return users;
+  };
+
   fetchUserByName = async (username) => {
     const res = await this.api.call(`users/${username}/name`, "GET");
     return new User(this, res.body);
