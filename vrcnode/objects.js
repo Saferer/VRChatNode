@@ -56,6 +56,12 @@ class Avatar {
     this.client = client;
     obj && Object.assign(this, obj);
   }
+
+  //TODO => TEST
+  select = () => {
+    const res = this.client.api.call(`avatars/${this.id}/select`);
+    return new CurrentUser(this.client, res.body);
+  };
 }
 
 class LimitedWorld {
@@ -72,6 +78,7 @@ class World extends LimitedWorld {
   }
 }
 
+//Need documentation updated to implement
 class Notification {
   constructor(client, obj) {
     this.client = client;
@@ -79,7 +86,7 @@ class Notification {
   }
 
   accept = async () => {
-    if (this.type === "friendrequest") {
+    if (this.type === "friendRequest") {
       const res = await this.client.api.call(
         `auth/user/notifications/${this.id}/accept`,
         "PUT"
